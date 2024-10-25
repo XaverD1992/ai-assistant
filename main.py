@@ -116,13 +116,13 @@ if __name__ == '__main__':
 
     # задача генерации текста для блога
     run1 = run_thread(get_prompt_for_generating_text_for_blog(cleaned_text), thread)
-    run1 = wait_on_run(run1, thread)
+    wait_on_run(run1, thread)
     text_for_blog = openai_client.beta.threads.messages.list(thread_id=thread.id, order="asc").data[1].content[0].text.value
     save_text_for_blog(text_for_blog)
 
     # задача генерации короткого текста для последующей генерации изображения по ней
     run2 = run_thread(get_prompt_for_generating_short_phrase_for_image(text_for_blog), thread)
-    run2 = wait_on_run(run2, thread)
+    wait_on_run(run2, thread)
     text_for_image = openai_client.beta.threads.messages.list(thread_id=thread.id, order="asc").data[3].content[0].text.value
     save_short_text(text_for_image)
 
